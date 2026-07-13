@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  # Container 1: O nosso Banco de Dados
+  meu_banco:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: senha_segura
+      POSTGRES_DB: empresa_db
+    ports:
+      - "5432:5432"
+
+  # Container 2: A nossa API Python
+  minha_api:
+    build: .
+    ports:
+      - "8000:8000"
+    depends_on:
+      - meu_banco # A API só liga depois que o banco estiver de pé
